@@ -13,8 +13,8 @@ import { IFeature } from '../../interfaces';
 
 interface IFeatureCardProps {
   feature: IFeature,
-  onEdit: (feature: IFeature) => void;
-  onDelete: (feature?: IFeature) => (event: MouseEvent<HTMLButtonElement>) => void;
+  onEdit?: (feature: IFeature) => void;
+  onDelete?: (feature?: IFeature) => (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface IFeatureCardState {
@@ -27,18 +27,21 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
   };
 
   onFeatureToggle = (feature: IFeature) => () => {
-    this.props.onEdit({
+    const { onEdit } = this.props;
+
+    onEdit && onEdit({
       ...feature,
       active: !feature.active
     });
   };
 
   onToggleEditing = (feature: IFeature, submit: boolean = false) => () => {
+    const { onEdit } = this.props;
     const { editingValue } = this.state;
 
     if (!!editingValue) {
-      if (submit)
-        this.props.onEdit({
+      if (submit && onEdit)
+        onEdit({
           ...feature,
           // Despite null check above - tslint still throws TS2322 error. 'null' is not assignable to 'string'.
           // So I added current feature key in case 'editingValue' is null (what will never happen)
@@ -74,7 +77,8 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
     const { editingValue } = this.state;
     const {
       feature,
-      onDelete
+      onDelete,
+      onEdit,
     } = this.props;
 
     return (
@@ -85,6 +89,7 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
       >
         <Switch
           checked={feature.active}
+          disabled={!onEdit}
           onChange={this.onFeatureToggle(feature)}
         />
         {editingValue
@@ -114,11 +119,15 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
               <div className="feature-card__key">{feature.key}</div>
               <IconButton
                 color="secondary"
-                onClick={onDelete(feature)}
+                disabled={!onDelete}
+                onClick={onDelete && onDelete(feature)}
               >
                 <DeleteIcon/>
               </IconButton>
-              <IconButton onClick={this.onToggleEditing(feature)}>
+              <IconButton
+                onClick={this.onToggleEditing(feature)}
+                disabled={!onEdit}
+              >
                 <EditIcon/>
               </IconButton>
             </>

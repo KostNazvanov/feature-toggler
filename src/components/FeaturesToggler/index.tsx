@@ -10,9 +10,9 @@ import FeatureCreator from './FeatureCreator';
 
 interface IFeaturesTogglerProps {
   features: IFeature[];
-  onEdit: (feature: IFeature) => void;
-  onDelete: (feature: IFeature) => void;
-  onCreate: (feature: IFeature) => void;
+  onEdit?: (feature: IFeature) => void;
+  onDelete?: (feature: IFeature) => void;
+  onCreate?: (feature: IFeature) => void;
 }
 
 interface IFeatureToggleState {
@@ -43,31 +43,41 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
     });
 
   onFeatureDelete = (id: string | null) => () => {
-    if (!id) return;
+    const { onDelete } = this.props;
+    if (!id || !onDelete) return;
 
     const feature = this.props.features.find(feature => feature.id === id);
     if (!feature) return;
 
-    this.props.onDelete(feature);
+    onDelete(feature);
   };
 
-  getFeatureCard = (feature: IFeature) => (
-    <FeatureCard
-      key={feature.id}
-      feature={feature}
-      onEdit={this.props.onEdit}
-      onDelete={this.onDelete}
-    />
-  );
+  getFeatureCard = (feature: IFeature) => {
+    const { onDelete } = this.props;
+
+    return (
+      <FeatureCard
+        key={feature.id}
+        feature={feature}
+        onEdit={this.props.onEdit}
+        onDelete={onDelete && this.onDelete}
+      />
+    );
+  }
 
   render = () => {
+    const { onCreate } = this.props;
     const { deleting } = this.state;
 
     return (
       <Card className="features-card__wrapper">
         {this.props.features.map(this.getFeatureCard)}
-        <div className="divider"/>
-        <FeatureCreator onCreate={this.props.onCreate}/>
+        {onCreate && (
+          <>
+            <div className="divider"/>
+            <FeatureCreator onCreate={onCreate}/>
+          </>
+        )}
 
         <ConfirmationPopover
           open={deleting.id != null}
