@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, RefObject } from 'react';
 
 import Card from '@material-ui/core/Card';
 import Switch from '@material-ui/core/Switch';
@@ -28,9 +28,9 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
   state = {
     editing: {
       id: null,
-      value: '',
+      value: ''
     }
-  }
+  };
 
   onFeatureToggle = (feature: IFeature) => () => {
     this.props.onEdit({
@@ -56,13 +56,14 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
           value: ''
         }
       });
-    } else
+    } else {
       this.setState({
         editing: {
           id: feature.id,
           value: feature.key
         }
       });
+    }
   };
 
   onFeatureKeyEdit = (event: ChangeEvent<HTMLInputElement>) =>
@@ -73,11 +74,21 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
       }
     });
 
+  onKeyUp = (feature: IFeature) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' || event.keyCode === 13) {
+      this.onToggleEditing(feature, true)();
+    }
+
+    if (event.key === 'Escape' || event.keyCode === 27) {
+      this.onToggleEditing(feature)();
+    }
+  };
+
   render = () => {
     const { editing } = this.state;
     const {
       feature,
-      onDelete,
+      onDelete
     } = this.props;
 
     return (
@@ -95,6 +106,8 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
               <Input
                 value={editing.value}
                 onChange={this.onFeatureKeyEdit}
+                onKeyUp={this.onKeyUp(feature)}
+                autoFocus
               />
               <IconButton
                 color="secondary"
@@ -112,20 +125,20 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
           ) : (
             <>
               {feature.key}
-              <IconButton onClick={this.onToggleEditing(feature)}>
-                <EditIcon/>
-              </IconButton>
               <IconButton
                 color="secondary"
                 onClick={onDelete(feature)}
               >
                 <DeleteIcon/>
               </IconButton>
+              <IconButton onClick={this.onToggleEditing(feature)}>
+                <EditIcon/>
+              </IconButton>
             </>
           )}
       </Card>
     );
-  }
+  };
 }
 
 export default FeatureCard;
