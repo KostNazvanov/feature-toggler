@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import Card from '@material-ui/core/Card';
@@ -36,7 +36,7 @@ const FeatureCreator = (props: IFeatureCreatorProps) => {
     onClear();
   }
 
-  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
       onFeatureCreate();
     }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, RefObject } from 'react';
+import React, { ChangeEvent, MouseEvent, Component, KeyboardEvent } from 'react';
 
 import Card from '@material-ui/core/Card';
 import Switch from '@material-ui/core/Switch';
@@ -14,22 +14,16 @@ import { IFeature } from '../../interfaces';
 interface IFeatureCardProps {
   feature: IFeature,
   onEdit: (feature: IFeature) => void;
-  onDelete: (feature?: IFeature) => (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDelete: (feature?: IFeature) => (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface IFeatureCardState {
-  editing: {
-    id: string | null;
-    value: string;
-  }
+  editingValue: string | null;
 }
 
-class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> {
+class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
   state = {
-    editing: {
-      id: null,
-      value: ''
-    }
+    editingValue: null,
   };
 
   onFeatureToggle = (feature: IFeature) => () => {
@@ -40,52 +34,44 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
   };
 
   onToggleEditing = (feature: IFeature, submit: boolean = false) => () => {
-    const { editing: { id, value } } = this.state;
+    const { editingValue } = this.state;
 
-    if (id) {
-      if (submit) {
+    if (!!editingValue) {
+      if (submit)
         this.props.onEdit({
           ...feature,
-          key: value
+          // Despite null check above - tslint still throws TS2322 error. 'null' is not assignable to 'string'.
+          // So I added current feature key in case 'editingValue' is null (what will never happen)
+          key: editingValue || feature.key
         });
-      }
 
       this.setState({
-        editing: {
-          id: null,
-          value: ''
-        }
+        editingValue: null,
       });
     } else {
       this.setState({
-        editing: {
-          id: feature.id,
-          value: feature.key
-        }
+        editingValue: feature.key
       });
     }
   };
 
-  onFeatureKeyEdit = (event: ChangeEvent<HTMLInputElement>) =>
+  onKeyEdit = (event: ChangeEvent<HTMLInputElement>) =>
     this.setState({
-      editing: {
-        ...this.state.editing,
-        value: event.target.value
-      }
+      editingValue: event.target.value
     });
 
-  onKeyUp = (feature: IFeature) => (event: React.KeyboardEvent<HTMLInputElement>) => {
+  onKeyUp = (feature: IFeature) => (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' || event.keyCode === 13) {
-      this.onToggleEditing(feature, true)();
+      this.onToggleEditing(feature, true)(); // Submit editing
     }
 
     if (event.key === 'Escape' || event.keyCode === 27) {
-      this.onToggleEditing(feature)();
+      this.onToggleEditing(feature)(); // Cancel editing
     }
   };
 
   render = () => {
-    const { editing } = this.state;
+    const { editingValue } = this.state;
     const {
       feature,
       onDelete
@@ -101,12 +87,12 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
           checked={feature.active}
           onChange={this.onFeatureToggle(feature)}
         />
-        {editing.id === feature.id
+        {editingValue
           ? (
             <>
               <Input
-                value={editing.value}
-                onChange={this.onFeatureKeyEdit}
+                value={editingValue}
+                onChange={this.onKeyEdit}
                 onKeyUp={this.onKeyUp(feature)}
                 autoFocus
               />

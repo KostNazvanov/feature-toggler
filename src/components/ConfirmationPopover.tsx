@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import Popover from '@material-ui/core/Popover';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -8,8 +8,8 @@ interface IProps {
   open: boolean;
   description: string;
   anchor?: HTMLElement | null,
-  onSubmit: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClose: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const ConfirmationPopover = (props: IProps) => {
@@ -21,7 +21,7 @@ const ConfirmationPopover = (props: IProps) => {
     onClose
   } = props;
 
-  const onSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmitClick = (event: MouseEvent<HTMLButtonElement>) => {
     onSubmit(event);
     onClose(event);
   };

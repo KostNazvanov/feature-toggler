@@ -30,7 +30,7 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
     }
   };
 
-  onDelete = (feature?: IFeature) => (event: React.MouseEvent<HTMLButtonElement>) => {
+  onDelete = (feature?: IFeature) => (event: React.MouseEvent<HTMLButtonElement>) =>
     this.setState({
       deleting: feature
         ? {
@@ -41,7 +41,6 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
           anchor: null
         }
     });
-  }
 
   onFeatureDelete = (id: string | null) => () => {
     if (!id) return;
@@ -50,18 +49,16 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
     if (!feature) return;
 
     this.props.onDelete(feature);
-  }
-
-  getFeatureCard = (feature: IFeature) => {
-    return (
-      <FeatureCard
-        key={feature.id}
-        feature={feature}
-        onEdit={this.props.onEdit}
-        onDelete={this.onDelete}
-      />
-    )
   };
+
+  getFeatureCard = (feature: IFeature) => (
+    <FeatureCard
+      key={feature.id}
+      feature={feature}
+      onEdit={this.props.onEdit}
+      onDelete={this.onDelete}
+    />
+  );
 
   render = () => {
     const { deleting } = this.state;
