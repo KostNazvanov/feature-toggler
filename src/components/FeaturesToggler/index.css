@@ -1,0 +1,20 @@
+.features-card {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+
+.features-card__wrapper {
+    padding: 6px 12px;
+}
+
+.feature-card__key {
+    min-width: 167px;
+    height: fit-content;
+    text-align: left;
+    width: -webkit-fill-available;
+}
+
+.feature-card__confirmation-popover {
+    padding: 6px 24px;
+}

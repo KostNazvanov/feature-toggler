@@ -94,6 +94,7 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
     return (
       <Card
         key={feature.key}
+        className="features-card"
         variant="outlined"
       >
         <Switch
@@ -124,7 +125,7 @@ class FeatureCard extends React.Component<IFeatureCardProps, IFeatureCardState> 
             </>
           ) : (
             <>
-              {feature.key}
+              <div className="feature-card__key">{feature.key}</div>
               <IconButton
                 color="secondary"
                 onClick={onDelete(feature)}

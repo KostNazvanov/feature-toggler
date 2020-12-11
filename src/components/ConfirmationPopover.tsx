@@ -18,13 +18,13 @@ const ConfirmationPopover = (props: IProps) => {
     anchor,
     description,
     onSubmit,
-    onClose,
+    onClose
   } = props;
 
   const onSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onSubmit(event);
     onClose(event);
-  }
+  };
 
   return (
     <Popover
@@ -33,28 +33,30 @@ const ConfirmationPopover = (props: IProps) => {
       onClose={onClose}
       anchorOrigin={{
         vertical: 'center',
-        horizontal: 'center',
+        horizontal: 'center'
       }}
       transformOrigin={{
         vertical: 'center',
-        horizontal: 'center',
+        horizontal: 'center'
       }}
     >
-      {description}
-      <IconButton
-        color="secondary"
-        onClick={onClose}
-      >
-        <ClearIcon/>
-      </IconButton>
-      <IconButton
-        color="primary"
-        onClick={onSubmitClick}
-      >
-        <CheckIcon/>
-      </IconButton>
+      <div className="feature-card__confirmation-popover">
+        {description}
+        <IconButton
+          color="secondary"
+          onClick={onClose}
+        >
+          <ClearIcon/>
+        </IconButton>
+        <IconButton
+          color="primary"
+          onClick={onSubmitClick}
+        >
+          <CheckIcon/>
+        </IconButton>
+      </div>
     </Popover>
-  )
-}
+  );
+};
 
 export default ConfirmationPopover;

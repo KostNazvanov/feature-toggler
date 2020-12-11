@@ -47,12 +47,16 @@ const FeatureCreator = (props: IFeatureCreatorProps) => {
   }
 
   return (
-    <Card variant="outlined">
+    <Card
+      className="features-card"
+      variant="outlined"
+    >
       <Switch
         checked={false}
         disabled={true}
       />
       <Input
+        className="feature-card__key"
         value={value}
         onChange={onValueChange}
         onKeyUp={onKeyUp}

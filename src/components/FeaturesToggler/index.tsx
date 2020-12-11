@@ -1,7 +1,7 @@
 import React from 'react';
+import './index.css';
 
 import Card from '@material-ui/core/Card';
-import Divider from '@material-ui/core/Divider';
 
 import { IFeature } from '../../interfaces';
 import ConfirmationPopover from '../ConfirmationPopover';
@@ -67,9 +67,11 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
     const { deleting } = this.state;
 
     return (
-      <Card>
+      <Card className="features-card__wrapper">
         {this.props.features.map(this.getFeatureCard)}
+        <div className="divider"/>
         <FeatureCreator onCreate={this.props.onCreate}/>
+
         <ConfirmationPopover
           open={deleting.id != null}
           anchor={deleting.anchor}
