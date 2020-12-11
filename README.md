@@ -10,7 +10,7 @@ Interface `IFeature`
     active: boolean;
 }
 ```
-Possible ideas for feature: add fields `togglable, editable, removable`
+Possible ideas for a feature: add optional fields `togglable, editable, removable`. Default value for each: true
 
 Prop | Type | Description
 --- | --- | ---
