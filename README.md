@@ -2,9 +2,9 @@ Features Toggler let's you render, toggle, edit, remove and add features to your
 
 All features mutation should be handled outside of Toggler.
 
-#####To start application simply run 2 commands: `yarn` and `yarn start`
+To start application simply run 2 commands: `yarn` and `yarn start`
 
-######Interface `IFeature`
+#Interface `IFeature`
 ```
 { 
     id: string;
