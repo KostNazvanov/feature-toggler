@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 
 import Card from '@material-ui/core/Card';
+import { Translation } from 'react-i18next';
 
 import { IFeature } from '../../interfaces';
 import ConfirmationPopover from '../ConfirmationPopover';
@@ -82,7 +83,7 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
         <ConfirmationPopover
           open={deleting.id != null}
           anchor={deleting.anchor}
-          description="Delete this feature?"
+          description={<Translation>{t => t('feature-card.deleting')}</Translation>}
           onSubmit={this.onFeatureDelete(deleting.id)}
           onClose={this.onDelete()}
         />

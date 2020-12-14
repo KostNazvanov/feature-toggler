@@ -6,7 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 
 interface IProps {
   open: boolean;
-  description: string;
+  description: string | JSX.Element;
   anchor?: HTMLElement | null,
   onSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
   onClose: (event: MouseEvent<HTMLButtonElement>) => void;
