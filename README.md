@@ -19,3 +19,5 @@ onEdit? | (feature: IFeature) => void | Called when feature is changed (toggled 
 onCreate? | (feature: IFeature) => void | Called when new feature is created
 onDelete? | (feature: IFeature) => void | Called when feature is removed
 If callback not passed in props - related features will be disabled. E.g: without `onEdit` prop, button for editing will be disabled
+
+App has unit tests with >95% coverage
