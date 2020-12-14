@@ -29,6 +29,7 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
   onFeatureToggle = (feature: IFeature) => () => {
     const { onEdit } = this.props;
 
+    console.log('editingValue', true)
     onEdit && onEdit({
       ...feature,
       active: !feature.active
