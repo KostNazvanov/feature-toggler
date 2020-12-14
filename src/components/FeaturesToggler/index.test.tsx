@@ -37,7 +37,7 @@ it('Calls onEdit and toggles', () => {
   expect(props.onEdit).toHaveBeenCalledWith({ ...props.features[0], active: false });
 });
 
-it('Calls onEdit and deletes', () => {
+it('Calls onDelete', () => {
   const toggler = mount(<FeaturesToggler {...props}/>);
   const card = toggler.find(FeatureCard).at(0);
   card.find(IconButton).at(1).simulate('click');
