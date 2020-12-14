@@ -4,7 +4,8 @@ All features mutation should be handled outside of Toggler.
 
 To start application simply run 2 commands: `yarn` and `yarn start`
 
-#Interface `IFeature`
+Interface `IFeature`
+-
 ```
 { 
     id: string;
@@ -14,7 +15,8 @@ To start application simply run 2 commands: `yarn` and `yarn start`
 ```
 Possible ideas for a feature: add optional fields `togglable, editable, removable`. Default value for each: true
 
-##FeatureToggler props
+FeatureToggler props
+-
 Prop | Type | Description
 --- | --- | ---
 features | IFeature[] | Array of features 
@@ -26,7 +28,8 @@ If callback not passed in props - related features will be disabled. E.g: withou
 
 App has unit tests with >95% total coverage
 
-#Features
+Features
+-
 - Switch toggles feature between 2 state: enabled and disabled
 - Delete button opens Confirmation Popover
     - Clicking outside Popover on pressing Cross is closing it
