@@ -36,7 +36,7 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
       deleting: feature
         ? {
           id: feature.id,
-          anchor: event.currentTarget || document.body
+          anchor: event.currentTarget
         } : {
           id: null,
           anchor: document.body
@@ -45,12 +45,10 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
 
   onFeatureDelete = (id: string | null) => () => {
     const { onDelete } = this.props;
-    if (!id || !onDelete) return;
 
     const feature = this.props.features.find(feature => feature.id === id);
-    if (!feature) return;
 
-    onDelete(feature);
+    onDelete && onDelete(feature as IFeature);
   };
 
   getFeatureCard = (feature: IFeature) => {

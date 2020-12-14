@@ -21,3 +21,18 @@ onDelete? | (feature: IFeature) => void | Called when feature is removed
 If callback not passed in props - related features will be disabled. E.g: without `onEdit` prop, button for editing will be disabled
 
 App has unit tests with >95% total coverage
+
+#Usage
+- Switch toggles feature between 2 state: enabled and disabled
+- Delete button opens Confirmation Popover
+    - Clicking outside Popover on pressing Cross is closing it
+    - Submitting deleting removes feature
+- Edit button enables Editing Mode
+    - Autofocus on Input
+    - Pressing Enter key or Submit button will submit changes
+    - Pressing Escape key or Cancel button will discard changes
+- At the bottom there is Feature Creator
+    - Enter key into Input
+    - Pressing Enter or Submit button will create new feature
+    - Pressing Escape key or Cancel button will clear Inpit's value
+
