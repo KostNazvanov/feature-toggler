@@ -29,7 +29,6 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
   onFeatureToggle = (feature: IFeature) => () => {
     const { onEdit } = this.props;
 
-    console.log('editingValue', true)
     onEdit && onEdit({
       ...feature,
       active: !feature.active
@@ -45,8 +44,8 @@ class FeatureCard extends Component<IFeatureCardProps, IFeatureCardState> {
         onEdit({
           ...feature,
           // Despite null check above - tslint still throws TS2322 error. 'null' is not assignable to 'string'.
-          // So I added current feature key in case 'editingValue' is null (what will never happen)
-          key: editingValue || feature.key
+          // @ts-ignore
+          key: editingValue
         });
 
       this.setState({

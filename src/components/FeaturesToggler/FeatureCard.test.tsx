@@ -5,27 +5,22 @@ import IconButton from '@material-ui/core/IconButton';
 
 import FeatureCard from './FeatureCard';
 
+const props = {
+  feature: {
+    id: '1',
+    key: 'Bob',
+    active: false
+  },
+  onEdit: jest.fn(),
+  onDelete: jest.fn()
+};
+
 it('Renders', () => {
-  const props = {
-    feature: {
-      id: '1',
-      key: 'Bob',
-      active: false
-    }
-  };
   const card = mount(<FeatureCard {...props} />);
   expect(card.find(Switch).length).toBe(1);
 });
 
 it('Calls onEdit and changes text', () => {
-  const props = {
-    feature: {
-      id: '1',
-      key: 'Bob',
-      active: false
-    },
-    onEdit: jest.fn()
-  };
   const newKey = 'Test text';
 
   const card = mount(<FeatureCard {...props} />);
@@ -35,34 +30,37 @@ it('Calls onEdit and changes text', () => {
   expect(props.onEdit).toHaveBeenCalledWith({ ...props.feature, key: newKey });
 });
 
-// it('Calls onEdit and toggles', () => {
-//   const props = {
-//     feature: {
-//       id: '1',
-//       key: 'Bob',
-//       active: false
-//     },
-//     onEdit: jest.fn()
-//   };
-//
-//   const card = mount(<FeatureCard {...props} />);
-//   console.log(card.find('.MuiSwitch-input').length)
-//   card.find('.MuiSwitch-input').at(0).simulate('click');
-//
-//   // expect(card.find('.Mui-checked').length).toBe(1);
-//   expect(props.onEdit).toHaveBeenCalledWith({ ...props.feature, active: true });
-// });
+it('Calls onEdit and toggles', () => {
+  const card = mount(<FeatureCard {...props} />);
+  card.find('input').at(0).simulate('change');
+
+  expect(props.onEdit).toHaveBeenCalledWith({ ...props.feature, active: true });
+});
 
 it('Calls onDelete', () => {
-  const props = {
-    feature: {
-      id: '1',
-      key: 'Bob',
-      active: false
-    },
-    onDelete: jest.fn()
-  };
   const card = mount(<FeatureCard {...props} />);
   card.find(IconButton).at(1).simulate('click');
   expect(props.onDelete).toBeCalled();
+});
+
+it('Press Enter while editing', () => {
+  const newKey = 'Test text';
+
+  const card = mount(<FeatureCard {...props} />);
+  card.find(IconButton).at(2).simulate('click');
+  const input = card.find('.MuiInputBase-input.MuiInput-input').at(0);
+  input.simulate('change', { target: { value: newKey } });
+  input.simulate('keyup', { key: 'Enter' });
+  expect(props.onEdit).toHaveBeenCalledWith({ ...props.feature, key: newKey });
+});
+
+it('Press Esc while editing', () => {
+  const newKey = 'Test text';
+
+  const card = mount(<FeatureCard {...props} />);
+  card.find(IconButton).at(2).simulate('click');
+  const input = card.find('.MuiInputBase-input.MuiInput-input').at(0);
+  input.simulate('change', { target: { value: newKey } });
+  input.simulate('keyup', { key: 'Escape' });
+  expect(props.onEdit).toHaveBeenCalledTimes(0);
 });
