@@ -19,7 +19,7 @@ interface IFeaturesTogglerProps {
 interface IFeatureToggleState {
   deleting: {
     id: string | null,
-    anchor: HTMLButtonElement | null;
+    anchor: HTMLElement;
   };
 }
 
@@ -27,7 +27,7 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
   state = {
     deleting: {
       id: null,
-      anchor: null
+      anchor: document.body
     }
   };
 
@@ -36,10 +36,10 @@ class FeaturesToggler extends React.Component<IFeaturesTogglerProps, IFeatureTog
       deleting: feature
         ? {
           id: feature.id,
-          anchor: event.currentTarget
+          anchor: event.currentTarget || document.body
         } : {
           id: null,
-          anchor: null
+          anchor: document.body
         }
     });
 

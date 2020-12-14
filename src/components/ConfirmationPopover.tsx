@@ -7,7 +7,7 @@ import CheckIcon from '@material-ui/icons/Check';
 interface IProps {
   open: boolean;
   description: string | JSX.Element;
-  anchor?: HTMLElement | null,
+  anchor?: HTMLElement,
   onSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
   onClose: (event: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -41,7 +41,7 @@ const ConfirmationPopover = (props: IProps) => {
       }}
     >
       <div className="feature-card__confirmation-popover">
-        {description}
+        <span className="feature-card__confirmation-popover__description">{description}</span>
         <IconButton
           color="secondary"
           onClick={onClose}
