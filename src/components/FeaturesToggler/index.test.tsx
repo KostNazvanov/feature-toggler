@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import Switch from '@material-ui/core/Switch';
-import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 
 import FeaturesToggler from './index';
